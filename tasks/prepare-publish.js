@@ -4,13 +4,13 @@ import path, { dirname } from 'path';
 import { fileURLToPath } from 'url';
 
 const baseDir = dirname(fileURLToPath(import.meta.url));
-const buildDir = path.resolve(baseDir, '../dist/npm-start-kit');
+const buildDir = path.resolve(baseDir, '../dist/npm-starter-kit');
 
-// source dir: src/npm-start-kit
-// build dir: dist/npm-start-kit
+// source dir: src/npm-starter-kit
+// build dir: dist/npm-starter-kit
 
 /**
- * Generate dist/npm-start-kit/package.json
+ * Generate dist/npm-starter-kit/package.json
  */
 async function main() {
   const pkgJson = await fse.readJSON(

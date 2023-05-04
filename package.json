@@ -1,5 +1,5 @@
 {
-  "name": "npm-start-kit",
+  "name": "npm-starter-kit",
   "private": true,
   "version": "0.0.0",
   "description": "",
@@ -7,10 +7,10 @@
   "type": "module",
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "https://github.com/hg-jang/npm-starter-kit"
   },
   "bugs": {
-    "url": ""
+    "url": "https://github.com/hg-jang/npm-starter-kit/issues"
   },
   "scripts": {
     "dev": "vite",
@@ -20,11 +20,11 @@
     "prettier:fix": "npm run prettier -- --write",
     "format": "npm run prettier:fix && npm run lint:fix",
     "build": "npm run init-dist && npm run copy-src && npm run generate-types",
-    "init-dist": "shx rm -rf dist && shx mkdir -p dist/npm-start-kit",
-    "copy-src": "shx cp -rf src/npm-start-kit dist",
+    "init-dist": "shx rm -rf dist && shx mkdir -p dist/npm-starter-kit",
+    "copy-src": "shx cp -rf src/npm-starter-kit dist",
     "generate-types": "tsc",
-    "publish:pre": "npm run build && node tasks/prepare-publish.js",
-    "publish:full": "npm run publish:pre && cd dist/npm-start-kit && npm publish"
+    "publish:prepare": "npm run build && node tasks/prepare-publish.js",
+    "publish:full": "npm run publish:pre && cd dist/npm-starter-kit && npm publish"
   },
   "devDependencies": {
     "eslint": "^8.39.0",

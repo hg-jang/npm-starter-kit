@@ -1,5 +1,5 @@
-import { sayHello } from '../../src/npm-start-kit/index';
+import { sayHello } from '../../src/npm-starter-kit/index';
 
-const hello = sayHello('npm-start-kit');
+const hello = sayHello('npm-starter-kit');
 
 document.write(hello);
