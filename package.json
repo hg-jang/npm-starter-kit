@@ -1,0 +1,39 @@
+{
+  "name": "npm-start-kit",
+  "private": true,
+  "version": "0.0.0",
+  "description": "",
+  "keywords": ["npm", "node", "package", "library", "publish"],
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "bugs": {
+    "url": ""
+  },
+  "scripts": {
+    "dev": "vite",
+    "lint": "npx eslint lib",
+    "lint:fix": "npm run lint -- --fix",
+    "prettier": "npx prettier lib --check",
+    "prettier:fix": "npm run prettier -- --write",
+    "format": "npm run prettier:fix && npm run lint:fix",
+    "build": "npm run init-dist && npm run copy-src && npm run generate-types",
+    "init-dist": "shx rm -rf dist && shx mkdir -p dist/npm-start-kit",
+    "copy-src": "shx cp -rf src/npm-start-kit dist",
+    "generate-types": "tsc",
+    "publish:pre": "npm run build && node tasks/prepare-publish.js",
+    "publish:full": "npm run publish:pre && cd dist/npm-start-kit && npm publish"
+  },
+  "devDependencies": {
+    "eslint": "^8.39.0",
+    "eslint-config-prettier": "^8.8.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "fs-extra": "^11.1.1",
+    "prettier": "^2.8.8",
+    "shx": "^0.3.4",
+    "typescript": "^5.0.4",
+    "vite": "^4.3.2"
+  }
+}
