@@ -3,7 +3,14 @@
  * @property {Number} [time=10]
  * @property {Boolean} [isActivated=true]
  * @property {Boolean} [isExploded=false]
- * @property {Function} [countDownCb]
+ * @property {countDownCb} [countDownCb]
+ * @property {Function} [blowUpCb]
+ */
+
+/**
+ * @callback countDownCb
+ * @param {Number} time
+ * @returns {void}
  */
 
 class Bomb {
@@ -27,7 +34,19 @@ class Bomb {
      */
     this._isExploded = options.isExploded || false;
 
+    /**
+     * @type {countDownCb}
+     * @private
+     * A callback to be called when bomb is counting down
+     */
     this._countDownCb = options.countDownCb;
+
+    /**
+     * @type {Function}
+     * @private
+     * A callback to be called when bomb blows up
+     */
+    this._blowUpCb = options.blowUpCb || this.blowUp;
 
     /**
      * @type {Number}
@@ -36,15 +55,14 @@ class Bomb {
     this.time = options.time || 10;
 
     if (this._isActivated) {
-      this._startCountDown(this._countDownCb);
+      this._countDown();
     }
   }
 
   /**
    * @private
-   * @param {Function} [countDownCb]
    */
-  _startCountDown(countDownCb) {
+  _countDown() {
     let interval = setInterval(() => {
       if (this._isExploded) {
         clearInterval(interval);
@@ -52,25 +70,22 @@ class Bomb {
       }
 
       this.time--;
-      if (countDownCb) countDownCb(this.time);
+      if (this._countDownCb) this._countDownCb(this.time);
 
       if (this.time === 0) {
-        this.blowUp();
+        this._blowUpCb();
+        this._isExploded = true;
       }
     }, 1000);
-  }
-
-  /**
-   * @returns {Number}
-   */
-  defuse() {
-    return this.time;
   }
 
   /**
    * @param {Number} time
    */
   setTime(time) {
+    if (this._isActivated)
+      throw new Error('Cannot set time when bomb is activated');
+
     this.time = time;
 
     return this;
@@ -83,9 +98,18 @@ class Bomb {
     return this.time;
   }
 
+  /**
+   * @private
+   */
   blowUp() {
     console.log('Boom!');
-    this._isExploded = true;
+  }
+
+  activate() {
+    if (this._isActivated) throw new Error('Bomb is already activated');
+
+    this._isActivated = true;
+    this._countDown();
   }
 }
 
